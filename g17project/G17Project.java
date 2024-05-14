@@ -1,13 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.mycompany.g17project;
-
-/**
- *
- * @author m7md
- */
 
 class Student {
     String name;
@@ -25,12 +16,12 @@ class Student {
     }
     
     public void displayStudent(){
-        System.out.print(name + " " + id + " "  + grade + " | ");
+        if(id != -1)
+            System.out.print(name + " " + id + " "  + grade + " | ");
+        else
+            System.out.print("Student Not Found! | ");
     }
     
-    public int getKey(){
-        return id;
-    }
 }
 
 class Tree {
@@ -43,11 +34,13 @@ class Tree {
     public Student find(int key){
         Student current = root;
         
-        while(key != current.id && current != null){
+        while(key != current.id){
             if(key < current.id)
                 current = current.leftChild;
             else
                 current = current.rightChild;
+            if(current == null)
+                return null;
         }
         
         return current;
@@ -169,10 +162,6 @@ class Tree {
         }
         return successor;
     }
-    
-    public int getKey(){
-        return root.id;
-    }
 
 }
 
@@ -221,21 +210,22 @@ class HashTable {
     
     public Student delete(int key){
         int hashVal = hashFunc(key);
-        if(hashArray[hashVal] != null && hashArray[hashVal] != nonItem){
+        if(hashArray[hashVal] != null && hashArray[hashVal] != nonItem && hashArray[hashVal].find(key) != null){
             Student temp = hashArray[hashVal].delete(key);
             if(hashArray[hashVal].isEmpty())
                 hashArray[hashVal] = nonItem;
             return temp;
         }
-        return null;
+        System.out.print(" Can Not Delete, ");
+        return nonItem.root;
     }
     
     public Student find(int key){
         int hashVal = hashFunc(key);
-        if(hashArray[hashVal] != null && hashArray[hashVal] != nonItem){
+        if(hashArray[hashVal] != null && hashArray[hashVal] != nonItem && hashArray[hashVal].find(key) != null){
             return hashArray[hashVal].find(key);
         }
-        return null;
+        return nonItem.root;
     }
     
     
@@ -267,8 +257,8 @@ public class G17Project {
         
         hTable.displayTable();
         
-        hTable.find(50).displayStudent();
-        hTable.find(8).displayStudent();
+        hTable.find(51).displayStudent();
+        hTable.find(668).displayStudent();
         hTable.find(60).displayStudent();
         System.out.println("\n//////////////////////////////////////////////////////////");
         
@@ -276,7 +266,7 @@ public class G17Project {
         hTable.delete(8).displayStudent();
         hTable.delete(118).displayStudent();
         hTable.delete(48).displayStudent();
-        hTable.delete(58).displayStudent();
+        hTable.delete(558).displayStudent();
         hTable.delete(63).displayStudent();
         hTable.delete(12).displayStudent();
         System.out.println("\n//////////////////////////////////////////////////////////");
